@@ -1,0 +1,24 @@
+{
+  "name": "github-repos",
+  "version": "1.0.0",
+  "description": "A script to get all github repos above 500 stars",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github",
+    "repos",
+    "script"
+  ],
+  "author": "Divyanshu Maithani",
+  "license": "MIT",
+  "dependencies": {
+    "appbase-js": "^0.11.1",
+    "json-concat": "^0.0.1",
+    "limiter": "^1.1.2",
+    "lodash.throttle": "^4.1.1",
+    "node-fetch": "^1.7.1",
+    "promise-throttle": "^0.3.1"
+  }
+}
