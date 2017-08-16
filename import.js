@@ -221,26 +221,35 @@ const appbaseRef = new Appbase({
   credentials: "YOUR_CREDENTIALS"
 });
 
-const data = require('./final.json');
-const importData = [];
+let i = 0;
 
-data.forEach((item) => {
-  importData.push({
-    index: {
-      _id: item.fullname
+endpoints.forEach((item) => {
+  const data = require(`./filtered-data/filtered_${item.start}_${item.end}.json`);
+  const importData = [];
+  console.log(`importing for filtered_${item.start}_${item.end}.json`);
+
+  data.forEach((item) => {
+    importData.push({
+      index: {
+        _id: item.fullname
+      }
+    })
+    importData.push(item);
+  });
+
+  // error when selecting larger arrays
+  const a = appbaseRef.bulk({
+    type: "YOUR_APP_TYPE",
+    body: importData
+  }).on('data', function(res) {
+    console.log("successful bulk: ", `for filtered_${item.start}_${item.end}.json`);
+  }).on('error', function(err) {
+    console.log("bulk failed: ", `for filtered_${item.start}_${item.end}.json`);
+  }).on('end', function() {
+    console.log(`importing for filtered_${item.start}_${item.end}.json DONE`);
+    i += 1;
+    if (i === endpoints.length) {
+      process.exit(0);
     }
   })
-  importData.push(item);
-});
-
-// error when selecting larger arrays
-const a = appbaseRef.bulk({
-  type: "gitxplore-latest",
-  body: importData.slice(0, 10)
-}).on('data', function(res) {
-  console.log("successful bulk: ", res);
-}).on('error', function(err) {
-  console.log("bulk failed: ", err);
-}).on('end', function() {
-  console.log('end here')
 })
