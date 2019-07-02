@@ -292,8 +292,8 @@ const getRepos = async (start, end, page) => {
       return json.items;
     })
     .catch(err => console.error('err', err))
-  console.log(`got ${data.length} results for ${start} to ${end} and page ${page}`);
-  if (data.length === 0) {
+//   console.log(`got ${data.length} results for ${start} to ${end} and page ${page}`);
+  if (!data || data.length === 0) {
     console.log(`no more results for page ${page}`);
     return [];
   } else {
